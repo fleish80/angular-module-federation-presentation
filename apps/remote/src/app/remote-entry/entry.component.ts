@@ -9,7 +9,7 @@ import { SharedStore } from '@angular-module-federation-presentation/shared-data
     <section>
       <h2>Remote</h2>
       <button (click)="addOne()">Add one</button>
-      <p>Counter: {{ counter() }}</p>
+      <p class="counter">Counter: {{ counter() }}</p>
     </section>
   `,
   styles:

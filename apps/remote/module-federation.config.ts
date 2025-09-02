@@ -5,6 +5,7 @@ const config: ModuleFederationConfig = {
   name: 'remote',
   exposes: {
     './Routes': join(__dirname, 'src/app/remote-entry/entry.routes.ts'),
+    './Elements': join(__dirname, 'src/app/remote-entry/elements.ts'),
   },
   shared: (libraryName, sharedConfig) => {
     if (

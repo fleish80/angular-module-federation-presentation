@@ -18,7 +18,8 @@
       "@angular-module-federation-presentation/shared-data": [
         "libs/src/index.ts"
       ],
-      "remote/Routes": ["apps/remote/src/app/remote-entry/entry.routes.ts"]
+      "remote/Routes": ["apps/remote/src/app/remote-entry/entry.routes.ts"],
+      "remote/Elements": ["apps/remote/src/app/remote-entry/elements.ts"]
     }
   }
 }

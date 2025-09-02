@@ -10,6 +10,7 @@ import { SharedStore } from '@angular-module-federation-presentation/shared-data
       <ul class="remote-menu">
         <li><a routerLink="/">Home</a></li>
         <li><a routerLink="remote">Remote</a></li>
+        <li><a routerLink="remote-ce">Remote CE</a></li>
       </ul>
     </nav>
 
