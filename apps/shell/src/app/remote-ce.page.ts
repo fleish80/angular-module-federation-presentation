@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -18,6 +18,18 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@ang
       }
     `
 })
-export class RemoteCePage {}
+export class RemoteCePage implements OnInit {
+
+  // private readonly appRef = inject(ApplicationRef);
+  // private readonly environmentInjector = inject(EnvironmentInjector);
+
+  async ngOnInit(): Promise<void> {
+    const mod = await import('remote/Elements');
+    const register = (mod as Record<string, unknown>)['register'] as (() => Promise<void>);
+    if (typeof register === 'function') {
+      await register();
+    }
+  }
+}
 
 
