@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { SharedStore } from '@angular-module-federation-presentation/shared-data';
 
 @Component({
@@ -10,8 +10,12 @@ import { SharedStore } from '@angular-module-federation-presentation/shared-data
       <h2>Remote</h2>
       <button (click)="addOne()">Add one</button>
       <p class="counter">Counter: {{ counter() }}</p>
+      @if (counterFromShell()) {
+        <p class="counter">Counter from Shell: {{ counterFromShell() }}</p>
+      }
     </section>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles:
     `
       section {
@@ -45,6 +49,7 @@ export default class RemoteEntry {
 
   private readonly store = inject(SharedStore);
   counter = this.store.counter;
+  counterFromShell = input<number>();
 
   addOne() {
     this.store.addOne();

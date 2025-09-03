@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { SharedStore } from '@angular-module-federation-presentation/shared-data';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } fr
   template: `
     <section>
       <h2>Remote (Custom Element)</h2>
-      <df-remote-widget></df-remote-widget>
+      <df-remote-widget [attr.counterfromshell]="counter()"></df-remote-widget>
     </section>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,8 +21,8 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } fr
 })
 export class RemoteCePage implements OnInit {
 
-  // private readonly appRef = inject(ApplicationRef);
-  // private readonly environmentInjector = inject(EnvironmentInjector);
+  private sharedStore = inject(SharedStore);
+  counter = this.sharedStore.counter;
 
   async ngOnInit(): Promise<void> {
     const mod = await import('remote/Elements');

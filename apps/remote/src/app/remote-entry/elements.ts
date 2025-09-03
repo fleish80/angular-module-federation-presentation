@@ -11,6 +11,7 @@ import {
 export const REMOTE_CE_TAG = 'df-remote-widget';
 
 export async function register(): Promise<void> {
+
   if (customElements.get(REMOTE_CE_TAG)) return;
 
   const app = await createApplication({
@@ -20,7 +21,13 @@ export async function register(): Promise<void> {
   const appRef = app.injector.get(ApplicationRef);
 
   class RemoteWidgetElement extends HTMLElement {
+
     private componentRef: ComponentRef<RemoteEntry> | null = null;
+    
+    static get observedAttributes(): string[] {
+      return ['counterfromshell'];
+    }
+  
     connectedCallback(): void {
       if (this.componentRef) return;
       this.componentRef = createComponent(RemoteEntry, {
@@ -28,7 +35,16 @@ export async function register(): Promise<void> {
         environmentInjector,
       });
       appRef.attachView(this.componentRef.hostView);
+      const initialCounterFromShell = this.getAttribute('counterfromshell');
+      if (initialCounterFromShell != null) this.componentRef.setInput?.('counterFromShell', Number(initialCounterFromShell));
       this.componentRef.changeDetectorRef.detectChanges();
+    }
+    attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void {
+      if (!this.componentRef) return;
+      if (name === 'counterfromshell') {
+        this.componentRef.setInput?.('counterFromShell', newValue != null ? Number(newValue) : undefined);
+        this.componentRef.changeDetectorRef.detectChanges();
+      }
     }
     disconnectedCallback(): void {
       if (this.componentRef) {
