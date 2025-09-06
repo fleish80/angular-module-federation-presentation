@@ -7,7 +7,10 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnI
   template: `
     <section>
       <h2>Remote (Custom Element)</h2>
-      <df-remote-widget [attr.counterfromshell]="counter()"></df-remote-widget>
+      <df-remote-widget
+        [attr.counterfromshell]="counter()"
+        (counterchange)="onRemoteCounter($event)"
+      ></df-remote-widget>
     </section>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +33,10 @@ export class RemoteCePage implements OnInit {
     if (typeof register === 'function') {
       await register();
     }
+  }
+
+  onRemoteCounter(e: CustomEvent<number>) {
+    this.sharedStore.counter.set(e.detail);
   }
 }
 
